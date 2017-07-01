@@ -1,0 +1,63 @@
+
+<html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<title>Flask Example</title>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Flask Example</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/public/">Public</a></li>
+            <li><a href="/private/">Private</a></li>
+            <li><a href="/admin">Admin Dashboard</a></li>
+        </ul>
+        
+        {% if session.get("current_user", None) == None %}
+            <div id="navbar" class="navbar-collapse collapse">
+                <form action="/login" method="post" class="navbar-form navbar-right">
+                    <div class="form-group">
+                      <input type="text" name="id" placeholder="User Name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="pw" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Log In</button>
+                </form>
+            </div>
+        {% else %}
+        <a href="/logout" class="navbar-form navbar-right"> Logout </a>
+        <a class="navbar-form navbar-right">{{ session.get("current_user") }}</a>
+                
+            
+        {% endif %}                          
+                        
+    </div>
+    </nav>
+
+
+<div class="container">
+  
+  <h1>{% block page_title %}{% endblock %}</h1>
+  
+  <p>{% block body %}{% endblock %}</p>
+
+</div>
+
+
+<div class='container'>
+<hr>
+<a href="http://flask.pocoo.org/"><img
+   src="{{ url_for('static', filename='img/flask-powered.png') }}"
+   border="0"
+   alt="Flask powered"
+   title="Flask powered"></a>
+
+Developed by <a href='https://github.com/XD-DENG'>XD-DENG</a>
+</div>
+
+
+</html>

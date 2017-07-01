@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block page_title %}Admin Dashboard{% endblock %}
+{% block body %}
+    {{ super() }}
+
+    {% if id_is_duplicated %}
+      <div class="text-danger">
+        <strong>Warning!</strong> The account name already exists.
+      </div>
+    {% endif %}
+
+    <div class = "container">
+      <div class="row">
+
+        <div class="col-lg-6">
+          <h3>Add Account</h3>
+
+          <form class="form-inline" action="/add_user" method='post'>
+            <div class="form-group">
+              <label for="id">ID</label>
+              <input type="text" class="form-control" name="id">
+            </div>
+            <div class="form-group">
+              <label for="pw">Password</label>
+              <input type="password" class="form-control" name="pw">
+            </div>
+            <br><br>
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-lg-6">
+              <h3>Manage Existing Accounts</h3>
+
+                <table class="table">
+                <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>ID</th>
+                      <th>Action</th>
+                    </tr>
+                </thead>
+                {% for number, id, act in users %}
+                        <tr>
+                           <th> {{ number }} </th>
+                           <td> {{ id }} </td>
+                           <td><a href={{act}}>Delete</a></td>
+                        </tr>
+                        
+                {% endfor %}
+                </table>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+    
+
+
+{% endblock %}
