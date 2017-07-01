@@ -37,10 +37,6 @@ def FUN_private():
     else:
         return abort(401)
 
-
-
-
-
 @app.route("/admin/")
 def FUN_admin():
     if session.get("current_user", None) == "ADMIN":
@@ -101,6 +97,5 @@ def FUN_add_user():
 
 
 
-
 if __name__ == "__main__":
-    app.run(debug=True, port = 9000, host="0.0.0.0")
+    app.run(debug=True)
