@@ -1,8 +1,18 @@
 {% extends "layout.html" %}
-{% block page_title %}Welcome to Flask Example{% endblock %}
+{% block page_title %}Welcome{% endblock %}
 {% block body %}
     {{ super() }}
 
-    <p>In this example, we cover concepts including: </p>
-    <p>template (inheritance), URL building, redirecting, error handeling, session management (authentication), etc.</p>
+    <p>This is a minimal web app developed in <a href="http://flask.pocoo.org/">Flask</a>.</p>
+    <p>The main purpose is to introduce how to implement the essentail elements in web applications with Flask framework, including</p>
+    <ul>
+        <li>URL Building</li>
+        <li>Authentication with Sessions</li>
+        <li>Template & Template Inheritance</li>
+        <li>Error Handling</li>
+        <li>Integrating with Bootstrap</li>
+        <li>Interaction with Database (SQLite)</li>
+    </ul>
+
+    <p>For more basic knowledge of Flask, you can refer to <a href="https://www.tutorialspoint.com/flask/">a tutorial on Tutorialspoint</a>.</p>
 {% endblock %}

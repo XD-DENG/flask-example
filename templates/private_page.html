@@ -2,5 +2,6 @@
 {% block page_title %}Private Page{% endblock %}
 {% block body %}
     {{ super() }}
+    <img src="{{ url_for('static', filename='img/private.jpg') }}" class="img-circle" alt="Cinque Terre" width="304" height="236">
     Only logged-in users, like you, can access this page.
 {% endblock %}
