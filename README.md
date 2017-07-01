@@ -16,6 +16,8 @@ The main purpose is to introduce how to implement the essential elements in web 
 
 - Interaction with Database (SQLite)
 
+- Invoking static resources
+
 For more basic knowledge of Flask, you can refer to [a tutorial on Tutorialspoint](https://www.tutorialspoint.com/flask/).
 
 
@@ -38,7 +40,7 @@ There are three tabs in this toy app
 - **Admin Page**: This part is only open to the user who logged in as "Admin". In this tab, the administrator can manage accounts (list, delete, or add).
 
 
-A few accounts were set for testing, like ***admin*** (password: admin), ***test_1*** (password: 123456), etc. You can also delete or add accounts after you log in as ***admin***.
+A few accounts were set for testing, like ***admin*** (password: admin), ***test*** (password: 123456), etc. You can also delete or add accounts after you log in as ***admin***.
 
 
 
