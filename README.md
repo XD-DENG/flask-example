@@ -1,8 +1,8 @@
 # flask-example
 
-A minimal web app developed in [Flask](http://flask.pocoo.org/). 
+A minimal web app developed with [Flask](http://flask.pocoo.org/) framework. 
 
-The main purpose is to introduce how to implement the essential elements in web application with Flask framework, including
+The main purpose is to introduce how to implement the essential elements in web application with Flask, including
 
 - URL Building
 
