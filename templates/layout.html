@@ -2,13 +2,22 @@
 <html>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
 <title>Flask Example</title>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="/">Flask Example</a>
         </div>
 
+        <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/public/">Public</a></li>
@@ -16,8 +25,8 @@
             <li><a href="/admin">Admin Dashboard</a></li>
         </ul>
         
+        <ul class="nav navbar-nav navbar-right">
         {% if session.get("current_user", None) == None %}
-            <div id="navbar" class="navbar-collapse collapse">
                 <form action="/login" method="post" class="navbar-form navbar-right">
                     <div class="form-group">
                       <input type="text" name="id" placeholder="User Name" class="form-control">
@@ -27,13 +36,12 @@
                     </div>
                     <button type="submit" class="btn btn-success">Log In</button>
                 </form>
-            </div>
         {% else %}
-        <a href="/logout" class="navbar-form navbar-right"> Logout </a>
-        <a class="navbar-form navbar-right">{{ session.get("current_user") }}</a>
-                
-            
-        {% endif %}                          
+              <a><b>{{ session.get("current_user") }}</b></a>
+              <a href="/logout"><b> Logout </b></a>
+        {% endif %}
+        </ul>
+        </div>
                         
     </div>
     </nav>
