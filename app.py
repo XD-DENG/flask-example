@@ -85,13 +85,13 @@ def FUN_add_user():
             user_table = zip(range(1, len(user_list)+1),\
                             user_list,\
                             [x + y for x,y in zip(["/delete_user/"] * len(user_list), user_list)])
-            return(render_template("admin.html", id_is_duplicated = True, users = user_table))
+            return(render_template("admin.html", id_to_add_is_duplicated = True, users = user_table))
         if " " in request.form.get('id') or "'" in request.form.get('id'):
             user_list = list_users()
             user_table = zip(range(1, len(user_list)+1),\
                             user_list,\
                             [x + y for x,y in zip(["/delete_user/"] * len(user_list), user_list)])
-            return(render_template("admin.html", id_is_invalid = True, users = user_table))
+            return(render_template("admin.html", id_to_add_is_invalid = True, users = user_table))
         else:
             add_user(request.form.get('id'), request.form.get('pw'))
             return(redirect(url_for("FUN_admin")))
