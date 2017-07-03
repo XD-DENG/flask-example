@@ -2,14 +2,16 @@
 {% block page_title %}Admin Dashboard{% endblock %}
 {% block body %}
     {{ super() }}
-
-    {% if id_is_duplicated %}
+    
+    {# only invoked when failed adding new ID due to duplication #}
+    {% if id_to_add_is_duplicated %}
       <div class="text-danger">
         <strong>Warning!</strong> The account name already exists.
       </div>
     {% endif %}
-
-    {% if id_is_invalid %}
+    
+    {# only invoked when failed adding new ID due to invalid character #}
+    {% if id_to_add_is_invalid %}
       <div class="text-danger">
         <strong>Warning!</strong> The account name is invalid.
       </div>
