@@ -37,8 +37,10 @@
                     <button type="submit" class="btn btn-success">Log In</button>
                 </form>
         {% else %}
-              <a><b>{{ session.get("current_user") }}</b></a>
-              <a href="/logout"><b> Logout </b></a>
+        <li>
+              <a><b>{{ session.get("current_user") }}</b></a></li>
+              <li><a href="/logout"><b><u>Logout</u></b></a>
+          </li>
         {% endif %}
         </ul>
         </div>

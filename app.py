@@ -80,13 +80,19 @@ def FUN_delete_user(id):
 def FUN_add_user():
     if session.get("current_user", None) == "ADMIN":
 
-        # before we add the user, we need to ensure this is doesn't exsit in database.
+        # before we add the user, we need to ensure this is doesn't exsit in database. We also need to ensure the id is valid.
         if request.form.get('id').upper() in list_users():
             user_list = list_users()
             user_table = zip(range(1, len(user_list)+1),\
                             user_list,\
                             [x + y for x,y in zip(["/delete_user/"] * len(user_list), user_list)])
             return(render_template("admin.html", id_is_duplicated = True, users = user_table))
+        if " " in request.form.get('id'):
+            user_list = list_users()
+            user_table = zip(range(1, len(user_list)+1),\
+                            user_list,\
+                            [x + y for x,y in zip(["/delete_user/"] * len(user_list), user_list)])
+            return(render_template("admin.html", id_is_invalid = True, users = user_table))
         else:
             add_user(request.form.get('id'), request.form.get('pw'))
             return(redirect(url_for("FUN_admin")))
@@ -98,4 +104,4 @@ def FUN_add_user():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
