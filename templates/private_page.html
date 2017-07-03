@@ -2,6 +2,44 @@
 {% block page_title %}Private Page{% endblock %}
 {% block body %}
     {{ super() }}
-    <img src="{{ url_for('static', filename='img/private.jpg') }}" class="img-circle" alt="Cinque Terre" width="304" height="236">
-    Only logged-in users, like you, can access this page.
+
+    <h4>You can take notes here. Only yourself can access them. They will be removed when your account is removed.</h4>
+
+    <hr>
+    
+    <div class="form-group">
+      <label for="textArea" class="col-lg-3 control-label">Note to Take</label>
+      <div class="col-lg-9">
+      <form action="/write_note" method="post">
+        <input class="form-control" name="text_note_to_take"></input>
+        <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+
+    {% if notes %}
+        <h2>Your Notes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                  <th>Note ID</th>
+                  <th>Timestamp</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+            </thead>
+            {% for note_id, timestamp, note, act in notes %}
+                    <tr>
+                       <td> {{ note_id }} </td>
+                       <td> {{ timestamp }} </td>
+                       <td> {{ note }} </td>
+                       <td><a href={{act}}>Delete</a></td>
+                    </tr>
+                    
+            {% endfor %}
+        </table>
+    {% endif %}
+
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash
 from database import list_users, verify, delete_user_from_db, add_user
+from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -9,6 +10,10 @@ app.config.from_object('config')
 @app.errorhandler(401)
 def FUN_401(error):
     return render_template("page_401.html"), 401
+
+@app.errorhandler(403)
+def FUN_403(error):
+    return render_template("page_403.html"), 403
 
 @app.errorhandler(404)
 def FUN_404(error):
@@ -33,7 +38,12 @@ def FUN_public():
 @app.route("/private/")
 def FUN_private():
     if "current_user" in session.keys():
-        return render_template("private_page.html")
+        notes_list = read_note_from_db(session['current_user'])
+        notes_table = zip([x[0] for x in notes_list],\
+                          [x[1] for x in notes_list],\
+                          [x[2] for x in notes_list],\
+                          ["/delete_note/" + x[0] for x in notes_list])
+        return render_template("private_page.html", notes = notes_table)
     else:
         return abort(401)
 
@@ -48,6 +58,26 @@ def FUN_admin():
     else:
         return abort(401)
 
+
+
+
+
+
+@app.route("/write_note", methods = ["POST"])
+def FUN_write_note():
+    text_to_write = request.form.get("text_note_to_take")
+    write_note_into_db(session['current_user'], text_to_write)
+
+    return(redirect(url_for("FUN_private")))
+
+@app.route("/delete_note/<note_id>", methods = ["GET"])
+def FUN_delete_note(note_id):
+    if session.get("current_user", None) == match_user_id_with_note_id(note_id): # Ensure the current user is NOT operating on other users' note.
+        delete_note_from_db(note_id)
+    else:
+        return abort(401)
+
+    return(redirect(url_for("FUN_private")))
 
 
 

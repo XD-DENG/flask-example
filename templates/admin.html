@@ -5,16 +5,18 @@
     
     {# only invoked when failed adding new ID due to duplication #}
     {% if id_to_add_is_duplicated %}
-      <div class="text-danger">
-        <strong>Warning!</strong> The account name already exists.
-      </div>
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Warning!</strong> The account name already exists.
+    </div>
     {% endif %}
     
     {# only invoked when failed adding new ID due to invalid character #}
     {% if id_to_add_is_invalid %}
-      <div class="text-danger">
-        <strong>Warning!</strong> The account name is invalid.
-      </div>
+    <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Warning!</strong> The account name is invalid.
+    </div>
     {% endif %}
 
     <div class = "container">
@@ -61,12 +63,6 @@
 
       </div>
     </div>
-
-
-
-
-
-    
 
 
 {% endblock %}
