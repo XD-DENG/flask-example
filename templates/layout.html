@@ -21,8 +21,12 @@
         <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="/public/">Public</a></li>
-            <li><a href="/private/">Private</a></li>
-            <li><a href="/admin">Admin Dashboard</a></li>
+            {% if session.get("current_user", None) != None %}
+	       <li><a href="/private/">Private</a></li>
+	    {% endif%}
+            {% if session.get("current_user", None) == "ADMIN" %}
+	      <li><a href="/admin">Admin Dashboard</a></li>
+	    {% endif %}
         </ul>
         
         <ul class="nav navbar-nav navbar-right">
