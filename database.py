@@ -4,6 +4,7 @@ import datetime
 
 user_db_file_location = "database_file/users.db"
 note_db_file_location = "database_file/notes.db"
+image_db_file_location = "database_file/images.db"
 
 def list_users():
     _conn = sqlite3.connect(user_db_file_location)
@@ -38,6 +39,13 @@ def delete_user_from_db(id):
     _conn = sqlite3.connect(note_db_file_location)
     _c = _conn.cursor()
     _c.execute("delete from notes where user = '" + id + "';")
+    _conn.commit()
+    _conn.close()
+
+    # when we delete a user from database USERS, we also need to delete all his or her images data from database IMAGES
+    _conn = sqlite3.connect(image_db_file_location)
+    _c = _conn.cursor()
+    _c.execute("delete from images where owner = '" + id + "';")
     _conn.commit()
     _conn.close()
 
@@ -100,6 +108,30 @@ def delete_note_from_db(note_id):
 
     _conn.commit()
     _conn.close()
+
+def image_upload_record(uid, owner, image_name, timestamp):
+    _conn = sqlite3.connect(image_db_file_location)
+    _c = _conn.cursor()
+
+    command = "insert into images values ('{0}', '{1}', '{2}', '{3}');".format(uid, owner, image_name, timestamp)
+    _c.execute(command)
+
+    _conn.commit()
+    _conn.close()
+
+def list_images_for_user(owner):
+    _conn = sqlite3.connect(image_db_file_location)
+    _c = _conn.cursor()
+
+    command = "select uid, timestamp, name from images where owner = '{0}'".format(owner)
+    _c.execute(command)
+    result = _c.fetchall()
+
+    _conn.commit()
+    _conn.close()
+
+    return result
+
 
 
 

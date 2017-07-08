@@ -43,4 +43,32 @@
         </table>
     {% endif %}
 
+    <hr>
+    <h3>Upload Image</h3>
+    <form method='post' action='/upload_image' enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+
+    {% if images %}
+        <h3>Your Images</h3>
+        <table class="table small">
+            <thead>
+                <tr>
+                  <th>Image ID</th>
+                  <th>Timestamp</th>
+                  <th>Image Name</th>
+                </tr>
+            </thead>
+            {% for image_id, timestamp, image_name in images %}
+                    <tr>
+                       <td> {{ image_id }} </td>
+                       <td> {{ timestamp }} </td>
+                       <td> {{ image_name }} </td>
+                    </tr>
+                    
+            {% endfor %}
+        </table>
+    {% endif %}
+
 {% endblock %}

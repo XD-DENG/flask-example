@@ -1,6 +1,13 @@
+import os
+import datetime
+import hashlib
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash
 from database import list_users, verify, delete_user_from_db, add_user
 from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
+from database import image_upload_record, list_images_for_user
+from werkzeug.utils import secure_filename
+
+
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -23,6 +30,10 @@ def FUN_404(error):
 def FUN_405(error):
     return render_template("page_405.html"), 405
 
+@app.errorhandler(413)
+def FUN_413(error):
+    return render_template("page_413.html"), 413
+
 
 
 
@@ -43,7 +54,13 @@ def FUN_private():
                           [x[1] for x in notes_list],\
                           [x[2] for x in notes_list],\
                           ["/delete_note/" + x[0] for x in notes_list])
-        return render_template("private_page.html", notes = notes_table)
+
+        images_list = list_images_for_user(session['current_user'])
+        images_table = zip([x[0] for x in images_list],\
+                          [x[1] for x in images_list],\
+                          [x[2] for x in images_list])
+
+        return render_template("private_page.html", notes = notes_table, images = images_table)
     else:
         return abort(401)
 
@@ -76,8 +93,39 @@ def FUN_delete_note(note_id):
         delete_note_from_db(note_id)
     else:
         return abort(401)
+    return(redirect(url_for("FUN_private")))
+
+
+# Reference: http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/upload_image", methods = ['POST'])
+def FUN_upload_image():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return(redirect(url_for("FUN_private")))
+        file = request.files['file']
+        # if user does not select file, browser also submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return(redirect(url_for("FUN_private")))
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            upload_time = str(datetime.datetime.now())
+            image_uid = hashlib.sha1(upload_time + filename).hexdigest()
+            # Save the image into UPLOAD_FOLDER
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_uid + "-" + filename))
+            # Record this uploading in database
+            image_upload_record(image_uid, session['current_user'], filename, upload_time)
+            return(redirect(url_for("FUN_private")))
 
     return(redirect(url_for("FUN_private")))
+
 
 
 
