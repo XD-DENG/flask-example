@@ -42,7 +42,9 @@ def delete_user_from_db(id):
     _conn.commit()
     _conn.close()
 
-    # when we delete a user from database USERS, we also need to delete all his or her images data from database IMAGES
+    # when we delete a user from database USERS, we also need to 
+    # [1] delete all his or her images from image pool (done in app.py)
+    # [2] delete all his or her images records from database IMAGES
     _conn = sqlite3.connect(image_db_file_location)
     _c = _conn.cursor()
     _c.execute("delete from images where owner = '" + id + "';")

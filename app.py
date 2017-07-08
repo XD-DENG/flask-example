@@ -162,6 +162,13 @@ def FUN_delete_user(id):
     if session.get("current_user", None) == "ADMIN":
         if id == "ADMIN": # ADMIN account can't be deleted.
             return abort(403)
+
+        # [1] Delete this user's images in image pool
+        images_to_remove = [x[0] for x in list_images_for_user(id)]
+        for f in images_to_remove:
+            image_to_delete_from_pool = [y for y in [x for x in os.listdir(app.config['UPLOAD_FOLDER'])] if y.split("-", 1)[0] == f][0]
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image_to_delete_from_pool))
+        # [2] Delele the records in database files
         delete_user_from_db(id)
         return(redirect(url_for("FUN_admin")))
     else:
