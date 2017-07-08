@@ -4,7 +4,7 @@ import hashlib
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash
 from database import list_users, verify, delete_user_from_db, add_user
 from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
-from database import image_upload_record, list_images_for_user
+from database import image_upload_record, list_images_for_user, match_user_id_with_image_uid, delete_image_from_db
 from werkzeug.utils import secure_filename
 
 
@@ -58,7 +58,8 @@ def FUN_private():
         images_list = list_images_for_user(session['current_user'])
         images_table = zip([x[0] for x in images_list],\
                           [x[1] for x in images_list],\
-                          [x[2] for x in images_list])
+                          [x[2] for x in images_list],\
+                          ["/delete_image/" + x[0] for x in images_list])
 
         return render_template("private_page.html", notes = notes_table, images = images_table)
     else:
@@ -124,6 +125,18 @@ def FUN_upload_image():
             image_upload_record(image_uid, session['current_user'], filename, upload_time)
             return(redirect(url_for("FUN_private")))
 
+    return(redirect(url_for("FUN_private")))
+
+@app.route("/delete_image/<image_uid>", methods = ["GET"])
+def FUN_delete_image(image_uid):
+    if session.get("current_user", None) == match_user_id_with_image_uid(image_uid): # Ensure the current user is NOT operating on other users' note.
+        # delete the corresponding record in database
+        delete_image_from_db(image_uid)
+        # delete the corresponding image file from image pool
+        image_to_delete_from_pool = [y for y in [x for x in os.listdir(app.config['UPLOAD_FOLDER'])] if y.split("-", 1)[0] == image_uid][0]
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], image_to_delete_from_pool))
+    else:
+        return abort(401)
     return(redirect(url_for("FUN_private")))
 
 

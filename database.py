@@ -132,6 +132,30 @@ def list_images_for_user(owner):
 
     return result
 
+def match_user_id_with_image_uid(image_uid):
+    # Given the note id, confirm if the current user is the owner of the note which is being operated.
+    _conn = sqlite3.connect(image_db_file_location)
+    _c = _conn.cursor()
+
+    command = "select owner from images where uid = '" + image_uid + "';" 
+    _c.execute(command)
+    result = _c.fetchone()[0]
+
+    _conn.commit()
+    _conn.close()
+
+    return result
+
+def delete_image_from_db(image_uid):
+    _conn = sqlite3.connect(image_db_file_location)
+    _c = _conn.cursor()
+
+    command = "delete from images where uid = '" + image_uid + "';" 
+    _c.execute(command)
+
+    _conn.commit()
+    _conn.close()
+
 
 
 
