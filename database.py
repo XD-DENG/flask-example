@@ -92,10 +92,8 @@ def write_note_into_db(id, note_to_write):
     _conn = sqlite3.connect(note_db_file_location)
     _c = _conn.cursor()
 
-    current_timestamp = str(datetime.datetime.now()) 
-    command = "insert into notes values('" + id.upper() + "', '" + \
-                current_timestamp + "', '" + note_to_write + \
-                "', '" + hashlib.sha1(id.upper() + current_timestamp + note_to_write).hexdigest() + "');" 
+    current_timestamp = str(datetime.datetime.now())
+    command = u"insert into notes values('{0}', '{1}', '{2}', '{3}');".format(id.upper(), current_timestamp, note_to_write, hashlib.sha1(id.upper() + current_timestamp).hexdigest())
     _c.execute(command)
 
     _conn.commit()
