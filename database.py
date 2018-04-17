@@ -22,7 +22,7 @@ def verify(id, pw):
     _c = _conn.cursor()
 
     _c.execute("select pw from users where id = '" + id + "';")
-    result = _c.fetchone()[0] == hashlib.sha256(pw).hexdigest()
+    result = _c.fetchone()[0] == hashlib.sha256(pw.encode()).hexdigest()
     
     _conn.close()
 
@@ -55,8 +55,7 @@ def add_user(id, pw):
     _conn = sqlite3.connect(user_db_file_location)
     _c = _conn.cursor()
 
-    command = "insert into users values('" + id.upper() + "', '" + hashlib.sha256(pw).hexdigest() + "');" 
-    _c.execute(command)
+    _c.execute("insert into users values(?, ?)", (id.upper(), hashlib.sha256(pw.encode()).hexdigest()))
     
     _conn.commit()
     _conn.close()
@@ -93,8 +92,7 @@ def write_note_into_db(id, note_to_write):
     _c = _conn.cursor()
 
     current_timestamp = str(datetime.datetime.now())
-    command = u"insert into notes values('{0}', '{1}', '{2}', '{3}');".format(id.upper(), current_timestamp, note_to_write, hashlib.sha1(id.upper() + current_timestamp).hexdigest())
-    _c.execute(command)
+    _c.execute("insert into notes values(?, ?, ?, ?)", (id.upper(), current_timestamp, note_to_write, hashlib.sha1((id.upper() + current_timestamp).encode()).hexdigest()))
 
     _conn.commit()
     _conn.close()
@@ -113,8 +111,7 @@ def image_upload_record(uid, owner, image_name, timestamp):
     _conn = sqlite3.connect(image_db_file_location)
     _c = _conn.cursor()
 
-    command = "insert into images values ('{0}', '{1}', '{2}', '{3}');".format(uid, owner, image_name, timestamp)
-    _c.execute(command)
+    _c.execute("insert into images values (?, ?, ?, ?)", (uid, owner, image_name, timestamp))
 
     _conn.commit()
     _conn.close()
@@ -163,4 +160,4 @@ def delete_image_from_db(image_uid):
 
 
 if __name__ == "__main__":
-    print list_users()
+    print(list_users())

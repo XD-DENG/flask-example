@@ -118,7 +118,7 @@ def FUN_upload_image():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             upload_time = str(datetime.datetime.now())
-            image_uid = hashlib.sha1(upload_time + filename).hexdigest()
+            image_uid = hashlib.sha1((upload_time + filename).encode()).hexdigest()
             # Save the image into UPLOAD_FOLDER
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_uid + "-" + filename))
             # Record this uploading in database
