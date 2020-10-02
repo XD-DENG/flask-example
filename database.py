@@ -2,6 +2,9 @@ import sqlite3
 import hashlib
 import datetime
 
+a = 20
+b = 40
+
 user_db_file_location = "database_file/users.db"
 note_db_file_location = "database_file/notes.db"
 image_db_file_location = "database_file/images.db"

@@ -14,6 +14,8 @@ app.config.from_object('config')
 
 
 
+
+
 @app.errorhandler(401)
 def FUN_401(error):
     return render_template("page_401.html"), 401
@@ -45,6 +47,10 @@ def FUN_root():
 @app.route("/public/")
 def FUN_public():
     return render_template("public_page.html")
+
+@app.route("/static/")
+def static():
+    return render_template("index.html")
 
 @app.route("/private/")
 def FUN_private():
