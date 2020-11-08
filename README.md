@@ -23,9 +23,11 @@ For more basic knowledge of Flask, you can refer to [a tutorial on Tutorialspoin
 
 ## How to Run
 
-- Step 1: Make sure you have Python packages *flask*, *hashlib*, and *sqlite3* installed.
+- Step 1: Make sure you have Python
 
-- Step 2: Go to this app's directory and run `python app.py`
+- Step 2: Install the requirements: `pip install -r requirements.txt`
+
+- Step 3: Go to this app's directory and run `python app.py`
 
 
 
