@@ -19,13 +19,13 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/public/">Public</a></li>
+            <li><a href="{{ url_for('FUN_root') }}">Home</a></li>
+            <li><a href="{{ url_for('FUN_public') }}">Public</a></li>
             {% if session.get("current_user", None) != None %}
-	       <li><a href="/private/">Private</a></li>
+	       <li><a href="{{ url_for('FUN_private') }}">Private</a></li>
 	    {% endif%}
             {% if session.get("current_user", None) == "ADMIN" %}
-	      <li><a href="/admin">Admin Dashboard</a></li>
+	      <li><a href="{{ url_for('FUN_admin') }}">Admin Dashboard</a></li>
 	    {% endif %}
         </ul>
         
@@ -43,7 +43,7 @@
         {% else %}
         <li>
               <a><b>{{ session.get("current_user") }}</b></a></li>
-              <li><a href="/logout"><b><u>Logout</u></b></a>
+              <li><a href="{{ url_for('FUN_logout') }}"><b><u>Logout</u></b></a>
           </li>
         {% endif %}
         </ul>
