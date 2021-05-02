@@ -52,6 +52,17 @@
     </div>
     </nav>
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <!-- note that this is in opposite order, I dont know why -->
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
 
 <div class="container">
   
