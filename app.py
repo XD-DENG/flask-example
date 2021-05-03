@@ -108,12 +108,12 @@ def FUN_upload_image():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
+            flash('No file part', category='danger')
             return(redirect(url_for("FUN_private")))
         file = request.files['file']
         # if user does not select file, browser also submit a empty part without filename
         if file.filename == '':
-            flash('No selected file')
+            flash('No selected file', category='danger')
             return(redirect(url_for("FUN_private")))
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
