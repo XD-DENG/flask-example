@@ -15,9 +15,6 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t my_app .
-          # Tag the Docker image
-          docker tag my_app ghcr.io/bjornarron/flask:latest
-
+          docker build -t ghcr.io/bjornarron/flask:latest .
           # Push the Docker image to the container registry
           docker push ghcr.io/bjornarron/flask:latest
