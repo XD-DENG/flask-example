@@ -15,9 +15,6 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          
-          # Authenticate with the container registry
-          docker login --username bjornarron -p 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
 
           # Tag the Docker image
           docker tag docker tag image-id ghcr.io/bjornarron/flask:latest
