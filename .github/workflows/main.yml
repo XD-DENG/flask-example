@@ -16,6 +16,6 @@ jobs:
       - name: Build and Push Docker image
         run: |
           docker build -t ghcr.io/bjornarron/flask-example:latest .
-          docker login ghcr.io --username bjornarron -p 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
+          docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
           # Push the Docker image to the container registry
           docker push ghcr.io/bjornarron/flask-example:latest
