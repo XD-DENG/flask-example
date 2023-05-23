@@ -19,3 +19,9 @@ jobs:
           docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
           # Push the Docker image to the container registry
           docker push ghcr.io/bjornarron/flask-example:latest
+          
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }} signeoy@10.225.150.138
+          docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
+          docker run ghcr.io/bjornarron/flask-example:latest -p 5000:5000
+          exit
+
