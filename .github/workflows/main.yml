@@ -25,3 +25,4 @@ jobs:
             ssh -i /home/bjornarfr/.ssh/id_id_ed25519 signeoy@10.225.150.138
             docker run ghcr.io/bjornarron/flask-example:latest -p 5000:5000
 
+
