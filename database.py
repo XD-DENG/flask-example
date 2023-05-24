@@ -2,7 +2,6 @@ import psycopg2
 import hashlib
 import datetime
 
-# PostgreSQL connection details
 conn_params = {
     "host": "localhost",
     "port": "5432",
