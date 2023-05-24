@@ -27,8 +27,7 @@ jobs:
       - name: Deploy docker image for flask on VM
         run: |
             docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
-            docker stop $(docker ps -a -q)
-            docker compose down
+            docker run -d -p 5000:5000 ghcr.io/bjornarron/flask-example:latest
             docker compose up -d
 
 
