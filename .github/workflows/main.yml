@@ -17,7 +17,6 @@ jobs:
         run: |
           docker build -t ghcr.io/bjornarron/flask-example:latest .
           docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
-          # Push the Docker image to the container registry
           docker push ghcr.io/bjornarron/flask-example:latest
   deploy:
     runs-on: deployment
@@ -28,6 +27,7 @@ jobs:
       - name: Deploy docker image for flask on VM
         run: |
             docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
-            docker run -d -p 5000:5000 ghcr.io/bjornarron/flask-example:latest
+            docker stop $(docker ps -a -q)
+            docker-compose up -d
 
 
