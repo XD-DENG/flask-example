@@ -28,6 +28,7 @@ jobs:
         run: |
             docker login ghcr.io --username bjornarron --password ${{ secrets.PAT_DEVOPS }}
             docker stop $(docker ps -a -q)
-            docker-compose up -d
+            docker compose down
+            docker compose up -d
 
 
