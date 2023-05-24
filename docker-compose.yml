@@ -1,4 +1,10 @@
 services:
+  flask-app:
+    image: ghcr.io/bjornarron/flask-example:latest
+    ports:
+      - '5000:5000'
+    depends_on:
+      - postgres-db
   postgres-db:
     image: postgres
     environment:
