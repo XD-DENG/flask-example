@@ -23,7 +23,7 @@ For more basic knowledge of Flask, you can refer to [a tutorial on Tutorialspoin
 
 ## How to Run
 
-- Step 1: Make sure you have Python
+- Step 1: Make sure you have Python 3.8 or nwer
 
 - Step 2: Install the requirements: `pip install -r requirements.txt`
 
